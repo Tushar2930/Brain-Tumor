@@ -11,7 +11,7 @@ import tensorflow_hub as hub
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
 
-@st.cache()
+@st.cache_resource()
 def load_model():
     model = tf.keras.models.load_model("tumor_model.h5", custom_objects={
                                        'KerasLayer': hub.KerasLayer})
@@ -21,7 +21,11 @@ def load_model():
 def app():
     # load model and deploy it predicts whether user has covid or not by taking image as input
     model = load_model()
-    st.title("Brain Tumor Detection")
+    comp = """<div style="background-color:#000000;padding:10px;border-radius:10px">
+    <h2 style="color:white;text-align:center;">Brain Tumor | Detection</h2>
+    </div>"""
+    st.markdown(comp, unsafe_allow_html=True)
+
     st.write(
         "Upload an image of your chest X-ray to detect whether you have Brain Tumor or not")
     file = st.file_uploader("Please upload an image file",
